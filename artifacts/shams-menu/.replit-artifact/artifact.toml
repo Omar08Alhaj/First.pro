@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "منيو بيتزا ومعجنات الشام"
+description = "Arabic mobile-first restaurant menu for browsing food categories, prices and contact details, with a QR code that opens the live menu directly."
+version = "1.0.0"
+id = "artifacts/shams-menu"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18313
+
+[services.development]
+run = "pnpm --filter @workspace/shams-menu run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/shams-menu", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/shams-menu/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18313"
+BASE_PATH = "/"
